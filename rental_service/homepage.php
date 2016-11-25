@@ -27,7 +27,6 @@ echo'
     <p>
         <input type="submit" name="submit" value="Search" />
     </p>
-  
     </form>
 
     <input type="button" name="search" value="Search All" onclick="location.href=\'get_cars.php\'">
