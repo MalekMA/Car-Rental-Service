@@ -1,10 +1,13 @@
 <?php
 
+session_start();
+
 require_once('/mysqli_connect.php');
 
 $location_selected = $_POST['locations'];
 
-$query = "SELECT * FROM owned_cars, locations WHERE owned_cars.LocationID = locations.LocationID AND locations.Location_Name LIKE '" . $location_selected . "'";
+$subquery = "SELECT * FROM currently_rented WHERE owned_cars.CarID = currently_rented.CarID";
+$query = "SELECT * FROM owned_cars, locations WHERE owned_cars.LocationID = locations.LocationID AND locations.Location_Name LIKE '" . $location_selected . "' AND NOT EXISTS(" . $subquery . ")";
 
 $response = mysqli_query($dbc, $query);
 

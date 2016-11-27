@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 echo'
 <head>
     <title>Welcome to the Car Rental Service</title>
@@ -30,10 +32,19 @@ echo'
     </form>
 
     <input type="button" name="search" value="Search All" onclick="location.href=\'get_cars.php\'">
-
+   
 
     </body>
 
 ';
 
+if(empty($_SESSION)){
+    echo '<input type="button" name="login" value="Login" onclick="location.href=\'login.php\'"/>';
+    echo '<input type="button" name="register" value="Register" onclick="location.href=\'register.php\'"/>';
+    echo 'No logged in user.';
+}
+else {
+    echo '<p> Logged in as ' . $_SESSION['Email'] . '</p>';
+    echo '<p><input type="button" name="logout" value="Logout" onclick="location.href=\'logout.php\'"/></p> ';
+}
 ?>

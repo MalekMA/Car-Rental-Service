@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 require_once ('/mysqli_connect.php');
 
 if(isset($_POST['submit'])) {
@@ -13,44 +15,38 @@ if(isset($_POST['submit'])) {
     $response = mysqli_query($dbc, $query);
 
     if ($response) {
-        echo '<table align="left" cellspacing="5" cellpadding="8">
-    
-        <tr><td align = "left"><b>Make</b></td>
-        <td align = "left"><b>Model</b></td>
-        <td align = "left"><b>Year</b></td>
-        <td align = "left"><b>Mileage</b></td>
-        <td align = "left"><b>MPG</b></td>
-        <td align = "left"><b>Colour</b></td>
-        <td align = "left"><b>Transmission</b></td>
-        <td align = "left"><b>Cylinder</b></td>
-        <td align = "left"><b>Litre</b></td>
-        <td align = "left"><b>Price</b></td>
-        <td align = "left"><b>Number of Seats</b></td>
-        <td align = "left"><b>Body Type</b></td>
-    
-        </tr>';
 
         while ($row = mysqli_fetch_array($response)) {
             echo
-                '<tr><td align="left">' . $row['Make'] . '</td>' .
-                '<td align="left">' . $row['Model'] . '</td>' .
-                '<td align="left">' . $row['Year'] . '</td>' .
-                '<td align="left">' . $row['Mileage'] . '</td>' .
-                '<td align="left">' . $row['MPG'] . '</td>' .
-                '<td align="left">' . $row['Color'] . '</td>' .
-                '<td align="left">' . $row['Transmission'] . '</td>' .
-                '<td align="left">' . $row['Cylinder'] . '</td>' .
-                '<td align="left">' . $row['Litre'] . '</td>' .
-                '<td align="left">' . $row['Price'] . '</td>' .
-                '<td align="left">' . $row['No_of_seats'] . '</td>' .
-                '<td align="left">' . $row['Body_Type'] . '</td>';
+                '<p><tr><td align="left"><b>Make: </b>' . $row['Make'] . '</td><br>' .
+                '<td align="left"><b>Model: </b>' . $row['Model'] . '</td><br>' .
+                '<td align="left"><b>Year: </b>' . $row['Year'] . '</td><br>' .
+                '<td align="left"><b>Mileage: </b>' . $row['Mileage'] . '</td><br>' .
+                '<td align="left"><b>MPG: </b>' . $row['MPG'] . '</td><br>' .
+                '<td align="left"><b>Color: </b>' . $row['Color'] . '</td><br>' .
+                '<td align="left"><b>Transmission: </b>' . $row['Transmission'] . '</td><br>' .
+                '<td align="left"><b>Cylinders: </b>' . $row['Cylinder'] . '</td><br>' .
+                '<td align="left"><b>Litres: </b>' . $row['Litre'] . '</td><br>' .
+                '<td align="left"><b>Price/Day: </b>' . $row['Price'] . '</td><br>' .
+                '<td align="left"><b>Number of seats: </b>' . $row['No_of_seats'] . '</td><br>' .
+                '<td align="left"><b>Body type: </b>' . $row['Body_Type'] . '</td><br>';
 
-            echo '</tr>';
+            echo '</tr></p>';
         }
-        echo '<tr>
-                <td align="left"><input type="button" name="home" value="Home" onclick="location.href=\'homepage.php\'"/></td>
-                <td align="left"><input type="button" name="rent" value="Rent" onclick="location.href=\'homepage.php\'"/></td>
-              </tr>';
+
+        echo '
+         <form action="rent.php" method="post"
+         <p>
+         <tr>
+            <td align="left">Select Pickup Date <input type="date" name="pickup_date"></td>
+            <td>Select Return Date <input type="date" name="return_date"></td>
+          </tr>
+        <p>
+         <tr>
+            <td align="left"><input type="button" name="home" value="Home" onclick="location.href=\'homepage.php\'"/></td>
+            <td align="left"><input type="button" name="rent" value="Rent" onclick="location.href=\'rent.php?carid=' . $car_id . '\'" /></td>
+         </tr>
+            </form>';
     } else {
         echo '<p>No data recovered</p>';
     }
