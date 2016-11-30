@@ -53,7 +53,7 @@ if(isset($_POST['submit'])) {
             echo '</tr></p>';
         }
 
-        $url = "http://api.edmunds.com/api/vehiclereviews/v2/". $make ."/". $model ."/". $year ."?sortby=thumbsUp%3AASC&pagenum=1&pagesize=10&fmt=json&api_key=upw3myjmqmc88fxwa2y2wwt8";
+        $url = "http://api.edmunds.com/api/vehiclereviews/v2/". lcfirst($make) ."/". lcfirst($model) ."/". $year ."?sortby=thumbsUp%3AASC&pagenum=1&pagesize=10&fmt=json&api_key=upw3myjmqmc88fxwa2y2wwt8";
         $response = file_get_contents($url);
         $json = (json_decode($response, true));
         $avgRtng = $json['averageRating'];
