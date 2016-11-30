@@ -2,6 +2,22 @@
 
 session_start();
 
+if(isset($_GET['err'])){
+    if($_GET['err'] == 1){
+        echo '<p>Please select pickup and return date!</p>';
+    }
+}
+
+if(empty($_SESSION)){
+    echo '<input type="button" name="login" value="Login" onclick="location.href=\'login.php\'"/>';
+    echo '<input type="button" name="register" value="Register" onclick="location.href=\'register.php\'"/>';
+    echo 'No logged in user.';
+}
+else {
+    echo '<p> Logged in as ' . $_SESSION['Email'] . '</p>';
+    echo '<p><input type="button" name="logout" value="Logout" onclick="location.href=\'logout.php\'"/></p> ';
+}
+
 require_once ('/mysqli_connect.php');
 
 if(isset($_POST['submit'])) {
@@ -17,10 +33,13 @@ if(isset($_POST['submit'])) {
     if ($response) {
 
         while ($row = mysqli_fetch_array($response)) {
+            $make = $row['Make'];
+            $model = $row['Model'];
+            $year = $row['Year'];
             echo
-                '<p><tr><td align="left"><b>Make: </b>' . $row['Make'] . '</td><br>' .
-                '<td align="left"><b>Model: </b>' . $row['Model'] . '</td><br>' .
-                '<td align="left"><b>Year: </b>' . $row['Year'] . '</td><br>' .
+                '<p><tr><td align="left"><b>Make: </b>' . $make . '</td><br>' .
+                '<td align="left"><b>Model: </b>' . $model . '</td><br>' .
+                '<td align="left"><b>Year: </b>' . $year . '</td><br>' .
                 '<td align="left"><b>Mileage: </b>' . $row['Mileage'] . '</td><br>' .
                 '<td align="left"><b>MPG: </b>' . $row['MPG'] . '</td><br>' .
                 '<td align="left"><b>Color: </b>' . $row['Color'] . '</td><br>' .
@@ -34,8 +53,25 @@ if(isset($_POST['submit'])) {
             echo '</tr></p>';
         }
 
+        $url = "http://api.edmunds.com/api/vehiclereviews/v2/". $make ."/". $model ."/". $year ."?sortby=thumbsUp%3AASC&pagenum=1&pagesize=10&fmt=json&api_key=upw3myjmqmc88fxwa2y2wwt8";
+        $response = file_get_contents($url);
+        $json = (json_decode($response, true));
+        $avgRtng = $json['averageRating'];
+        echo '<p><b>Average Online rating: </b>' . $avgRtng;
+
+        $query = "SELECT Review, Rating FROM rentals_history WHERE CarID = " . $car_id;
+
+        $response = mysqli_query($dbc, $query);
+
+        if ($response) {
+
+            while ($row = mysqli_fetch_array($response)){
+                echo '<p><b>Review: </b>' . $row['Review'] . ' <b>Rating: </b>' . $row['Rating'];
+            }
+        }
+
         echo '
-         <form action="rent.php" method="post"
+         <form action="rent.php?carid=' . $car_id . '" method="post">
          <p>
          <tr>
             <td align="left">Select Pickup Date <input type="date" name="pickup_date"></td>
@@ -44,7 +80,7 @@ if(isset($_POST['submit'])) {
         <p>
          <tr>
             <td align="left"><input type="button" name="home" value="Home" onclick="location.href=\'homepage.php\'"/></td>
-            <td align="left"><input type="button" name="rent" value="Rent" onclick="location.href=\'rent.php?carid=' . $car_id . '\'" /></td>
+            <td align="left"><input type="submit" name="rent" value="Rent"/></td>
          </tr>
             </form>';
     } else {

@@ -45,6 +45,11 @@ if(empty($_SESSION)){
 }
 else {
     echo '<p> Logged in as ' . $_SESSION['Email'] . '</p>';
+    if($_SESSION['Email'] == "admin@rentalservice.com"){
+       echo '<p><input type="button" name="admin_menu" value="Admin Menu" onclick="location.href=\'admin_menu.php\'"/></p>';
+    } else {
+      echo  '<p><input type="button" name="history" value="View History" onclick="location.href=\'rental_history.php\'"/></p>';
+    }
     echo '<p><input type="button" name="logout" value="Logout" onclick="location.href=\'logout.php\'"/></p> ';
 }
 ?>

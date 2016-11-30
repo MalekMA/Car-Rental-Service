@@ -34,9 +34,10 @@ if(isset($_POST['login'])){
                     echo 'Login Successful';
                     $_SESSION['Email'] = $email;
                     header('Location:homepage.php');
+                }else {
+                    header('Location:login.php?p=2');
                 }
             }
-            header('Location:login.php?p=2');
         }
     }
 }
