@@ -2,28 +2,22 @@
 
 session_start();
 
+include "format.php";
+
 if(isset($_GET['r'])){
     if($_GET['r'] == 1){
-        echo '<p>Vehicle entered successfully!</p>';
+        echo '<p align="cetner">Vehicle entered successfully!</p>';
     }
     else if($_GET['r'] == 2){
-        echo '<p>Vehicle was not added.</p>';
+        echo '<p align="center">Vehicle was not added.</p>';
     }
 }
 
-if(empty($_SESSION)){
-    echo '<input type="button" name="login" value="Login" onclick="location.href=\'login.php\'"/>';
-    echo '<input type="button" name="register" value="Register" onclick="location.href=\'register.php\'"/>';
-    echo 'No logged in user.';
-}
-else {
-    echo '<p> Logged in as ' . $_SESSION['Email'] . '</p>';
-    echo '<p><input type="button" name="logout" value="Logout" onclick="location.href=\'logout.php\'"/></p> ';
-}
+
 
 if($_SESSION['Email'] == "admin@rentalservice.com"){
     echo '
-    <form action="process_add.php" method="post"/>
+    <form action="process_add.php" method="post" align="center"/>
     <p><b>Make: </b><input type="text" name="Make" size="15"/></p>
     <p><b>Model: </b><input type="text" name="Model" size="15"/></p>
     <p><b>Year: </b><input type="text" name="Year" size="4" maxlength="4"/></p>
@@ -39,4 +33,14 @@ if($_SESSION['Email'] == "admin@rentalservice.com"){
     ';
 } else {
     echo 'Illegal Access';
+}
+
+if(empty($_SESSION)){
+    echo '<input type="button" name="login" value="Login" onclick="location.href=\'login.php\'"/>';
+    echo '<input type="button" name="register" value="Register" onclick="location.href=\'register.php\'"/>';
+    echo 'No logged in user.';
+}
+else {
+    echo '<p align="center"> Logged in as ' . $_SESSION['Email'] . '</p>';
+    echo '<p align="cetner"><input type="button" name="logout" value="Logout" onclick="location.href=\'logout.php\'"/></p> ';
 }

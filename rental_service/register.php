@@ -2,6 +2,8 @@
 
 session_start();
 
+include "format.php";
+
 if(isset($_GET['p'])){
     $p = $_GET["p"];
 
@@ -22,7 +24,7 @@ echo '
     </head>
     
     <body>
-        <form action="process_register.php" method="post">
+        <form action="process_register.php" method="post" align="center">
         
         <b>Register new account</b>
         

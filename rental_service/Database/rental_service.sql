@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 01, 2016 at 12:26 AM
+-- Generation Time: Nov 27, 2016 at 07:29 PM
 -- Server version: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -33,14 +33,6 @@ CREATE TABLE `currently_rented` (
   `Pickup_Date` date NOT NULL,
   `Return_Date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `currently_rented`
---
-
-INSERT INTO `currently_rented` (`RentalID`, `CarID`, `CustID`, `Pickup_Date`, `Return_Date`) VALUES
-(7, 1, 0, '2016-11-29', '2016-11-30'),
-(8, 5, 3, '2016-11-08', '2016-11-30');
 
 -- --------------------------------------------------------
 
@@ -145,7 +137,7 @@ CREATE TABLE `owned_cars` (
   `Mileage` float DEFAULT NULL,
   `MPG` float DEFAULT NULL,
   `Color` varchar(10) DEFAULT NULL,
-  `Transmission` varchar(60) DEFAULT NULL,
+  `Transmission` int(11) DEFAULT NULL,
   `Cylinder` int(11) DEFAULT NULL,
   `Litre` float DEFAULT NULL,
   `Price` float DEFAULT NULL,
@@ -158,14 +150,12 @@ CREATE TABLE `owned_cars` (
 --
 
 INSERT INTO `owned_cars` (`CarID`, `LocationID`, `Make`, `Model`, `Year`, `Mileage`, `MPG`, `Color`, `Transmission`, `Cylinder`, `Litre`, `Price`, `No_of_seats`, `Body_Type`) VALUES
-(1, 6, 'Chrysler', 'Sebring', 2007, 134000, 4.2, 'Black', 'Automatic', 4, 16.83, 35, 5, 'Sedan'),
-(2, 5, 'Nissan', 'Armada', 2013, 150000, 5, 'Black', 'Automatic', 6, 20, 50, 7, 'SUV'),
-(3, 3, 'honda', 'civic', 2013, 115000, 4.5, 'Grey', 'Manual', 6, 18, 30, 5, 'Sedan'),
-(4, 2, 'mazda', 'mazda 3', 2011, 80000, 3.5, 'Red', 'Automatic', 6, 17.5, 25, 5, 'Sedan'),
-(5, 1, 'toyota', 'corolla', 2014, 99000, 4, 'Black', 'Automatic', 4, 16.8, 30, 5, 'Sedan'),
-(6, 4, 'toyota', 'camry', 2016, 109000, 4, 'White', 'Manual', 6, 19, 28, 5, 'Sedan'),
-(7, 2, 'Honda', 'Civic', 2016, 2000, 31, 'Red', 'AUTOMATIC', 4, 1.5, 40, 5, 'Sedan'),
-(8, 2, 'Audi', 'A3', 2016, 2532, 24, 'Black', 'AUTOMATED_MANUAL', 4, 2, 60, 5, 'Sedan');
+(1, 6, 'Chrysler', 'Sebring', 2007, 134000, 4.2, 'Black', 4, 4, 16.83, 35, 5, 'Sedan'),
+(2, 5, 'Nissan', 'Armada', 2013, 150000, 5, 'Black', 5, 6, 20, 50, 7, 'SUV'),
+(3, 3, 'honda', 'civic', 2013, 115000, 4.5, 'Grey', 6, 6, 18, 30, 5, 'Sedan'),
+(4, 2, 'mazda', 'mazda 3', 2011, 80000, 3.5, 'Red', 4, 6, 17.5, 25, 5, 'Sedan'),
+(5, 1, 'toyota', 'corolla', 2014, 99000, 4, 'Black', 6, 4, 16.8, 30, 5, 'Sedan'),
+(6, 4, 'toyota', 'camry', 2016, 109000, 4, 'White', 5, 6, 19, 28, 5, 'Sedan');
 
 -- --------------------------------------------------------
 
@@ -179,8 +169,8 @@ CREATE TABLE `rentals_history` (
   `CustID` int(11) NOT NULL,
   `Pickup_Date` date NOT NULL,
   `Days_rented` int(11) NOT NULL,
-  `Review` varchar(150) DEFAULT NULL,
-  `Rating` double DEFAULT NULL
+  `Review` varchar(150) NOT NULL,
+  `Rating` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -188,14 +178,12 @@ CREATE TABLE `rentals_history` (
 --
 
 INSERT INTO `rentals_history` (`RentalID`, `CarID`, `CustID`, `Pickup_Date`, `Days_rented`, `Review`, `Rating`) VALUES
-(1, 1, 3, '0000-00-00', 5, 'What an excellent vehicle!', 4),
+(1, 1, 3, '0000-00-00', 5, 'very nice car', 4),
 (2, 2, 2, '0000-00-00', 3, 'good car, a bit unsatisfied', 3),
 (3, 3, 3, '0000-00-00', 4, 'best car ever', 4.5),
 (4, 4, 4, '0000-00-00', 2, 'could have chosen a better car', 3.5),
 (5, 5, 3, '0000-00-00', 5, 'it will not fail to amaze you', 5),
-(6, 6, 6, '0000-00-00', 3, 'very satisfied, prob will rent again', 4),
-(7, 1, 0, '2016-11-29', 1, 'Great car!', 5),
-(8, 5, 3, '2016-11-08', 22, NULL, NULL);
+(6, 6, 6, '0000-00-00', 3, 'very satisfied, prob will rent again', 4);
 
 --
 -- Indexes for dumped tables

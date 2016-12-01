@@ -2,20 +2,22 @@
 
 session_start();
 
+include "format.php";
+
 if(isset($_GET['err'])){
     if($_GET['err'] == 1){
-        echo '<p>Please select pickup and return date!</p>';
+        echo '<p align="center">Please select pickup and return date!</p>';
     }
 }
 
 if(empty($_SESSION)){
-    echo '<input type="button" name="login" value="Login" onclick="location.href=\'login.php\'"/>';
-    echo '<input type="button" name="register" value="Register" onclick="location.href=\'register.php\'"/>';
+    echo '<input type="button" name="login" value="Login" onclick="location.href=\'login.php\'" align="center"/>';
+    echo '<input type="button" name="register" value="Register" onclick="location.href=\'register.php\'" align="center"/>';
     echo 'No logged in user.';
 }
 else {
-    echo '<p> Logged in as ' . $_SESSION['Email'] . '</p>';
-    echo '<p><input type="button" name="logout" value="Logout" onclick="location.href=\'logout.php\'"/></p> ';
+    echo '<p align="center"> Logged in as ' . $_SESSION['Email'] . '</p>';
+    echo '<p align="center"><input type="button" name="logout" value="Logout" onclick="location.href=\'logout.php\'"/></p> ';
 }
 
 require_once ('/mysqli_connect.php');
@@ -71,7 +73,7 @@ if(isset($_POST['submit'])) {
         }
 
         echo '
-         <form action="rent.php?carid=' . $car_id . '" method="post">
+         <form action="rent.php?carid=' . $car_id . '" method="post" align="center">
          <p>
          <tr>
             <td align="left">Select Pickup Date <input type="date" name="pickup_date"></td>
@@ -84,10 +86,10 @@ if(isset($_POST['submit'])) {
          </tr>
             </form>';
     } else {
-        echo '<p>No data recovered</p>';
+        echo '<p align="center">No data recovered</p>';
     }
 } else {
-    echo '<p>Please select a vehicle</p><br/>';
+    echo '<p align="center">Please select a vehicle</p><br/>';
 }
 
 ?>

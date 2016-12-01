@@ -2,6 +2,8 @@
 
 session_start();
 
+include "format.php";
+
 if(isset($_GET['p'])){
     $p = $_GET["p"];
 
@@ -20,7 +22,7 @@ echo '
     </head>
     <body>
     
-    <form action="process_login.php" method="post">
+    <form action="process_login.php" method="post" align="center">
     
     <p><b>E-Mail:</b>
         <input type="text" name="email" size="20" vale=""/>

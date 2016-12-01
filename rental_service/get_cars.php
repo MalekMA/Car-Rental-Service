@@ -2,24 +2,9 @@
 
 session_start();
 
-if(empty($_SESSION)){
-    echo '<div align="right>" <input type="button" name="login" value="Login" onclick="location.href=\'login.php\'"/>';
-    echo '<input type="button" name="register" value="Register" onclick="location.href=\'register.php\'"/>';
-    echo 'No logged in user.</div>';
-}
-else {
-    echo '<div align="right>" <p> Logged in as ' . $_SESSION['Email'] . '</p>';
-    echo '<p><input type="button" name="logout" value="Logout" onclick="location.href=\'logout.php\'"/></p></div>';
-}
+include 'format.php';
 
-if(isset($_GET['err'])){
-    $err = $_GET['err'];
-
-    if($err == 1){
-        echo "<p>No results found.</p>";
-    }
-
-}
+	
 
 require_once('/mysqli_connect.php');
 
@@ -29,10 +14,11 @@ $query = "SELECT * FROM owned_cars, locations WHERE owned_cars.LocationID = loca
 $response = mysqli_query($dbc, $query);
 
 if($response){
-
-    echo '  <div>
-            <form action="get_filter_results.php?r=1" method="post">
-            <tr align="left">Colour
+	
+    echo ' 
+	<div>
+            <form action="get_filter_results.php?r=1" method="post" align="center">
+            <tr align="center">Colour
                 <select name="colour">
                     <option value=""></option>
                     <option value="Black">Black</option>
@@ -70,14 +56,15 @@ if($response){
             <input type="submit" name="filter" value="Filter" />
 
             </form>
-            </div>';
+            </div>
+			';
 
     echo '<form action="show_info.php" method="post">';
 
     while($row = mysqli_fetch_array($response)){
         $car_id = $row['CarID'];
         echo
-        '<div><p>' . $row['Make'] .
+        '<div align="center"><p>' . $row['Make'] .
         ' ' . $row['Model'] .
         ' ' . $row['Year'] .
         ' Located at: ' . $row['Location_Name'] .
@@ -93,6 +80,25 @@ if($response){
 
 } else {
     echo("Could not recover data.");
+}
+
+if(empty($_SESSION)){
+    echo '<p align="center"><div align="center>" <input type="button" name="login" value="Login" onclick="location.href=\'login.php\'"/></p>';
+    echo '<p align="center"><input type="button" name="register" value="Register" onclick="location.href=\'register.php\'"/></p>';
+    echo '<p align="center">No logged in user.</div></p>';
+}
+else {
+    echo '<div align="center"> <p> Logged in as ' . $_SESSION['Email'] . '</p>';
+    echo '<p align="center"><input type="button" name="logout" value="Logout" onclick="location.href=\'logout.php\'"/></p></div></p>';
+}
+
+if(isset($_GET['err'])){
+    $err = $_GET['err'];
+
+    if($err == 1){
+        echo "<p>No results found.</p>";
+    }
+
 }
 
 ?>
